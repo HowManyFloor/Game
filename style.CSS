@@ -1,0 +1,9 @@
+        .titre {
+            color : blue;
+            text-align : center;
+            font-size : 48px;
+        }
+        .body{
+            background-image: url("img/Azura.png");
+
+        }
