@@ -97,10 +97,33 @@
 
         // Ouvrir la fenêtre pour attribuer des points de stats
         function openStatsPanel() {
+            closePanels(); // Ferme tous les panneaux ouverts avant d'ouvrir un nouveau
             const panel = document.getElementById("stats-panel");
             panel.style.display = "block";
             updateStats();
             document.getElementById("available-points").textContent = availablePoints;
+        }
+
+        // Ouvrir un panneau d'équipement
+        function openPanel(slot) {
+            closePanels(); // Ferme tous les panneaux ouverts avant d'ouvrir un nouveau
+            currentSlot = slot;
+            const panel = document.getElementById("equipment-panel");
+            panel.style.display = "block";
+            const select = document.getElementById("equipment-select");
+            select.innerHTML = "";
+            equipment[slot].forEach((item, index) => {
+                let option = document.createElement("option");
+                option.value = index;
+                option.textContent = item.name;
+                select.appendChild(option);
+            });
+        }
+
+        // Fermer tous les panneaux ouverts
+        function closePanels() {
+            document.getElementById("equipment-panel").style.display = "none";
+            document.getElementById("stats-panel").style.display = "none";
         }
 
         // Ajouter un point à la statistique correspondante
@@ -120,20 +143,7 @@
             updateStats();
         }
 
-        function openPanel(slot) {
-            currentSlot = slot;
-            const panel = document.getElementById("equipment-panel");
-            panel.style.display = "block";
-            const select = document.getElementById("equipment-select");
-            select.innerHTML = "";
-            equipment[slot].forEach((item, index) => {
-                let option = document.createElement("option");
-                option.value = index;
-                option.textContent = item.name;
-                select.appendChild(option);
-            });
-        }
-
+        // Appliquer la sélection de l'équipement
         function applySelection() {
             const select = document.getElementById("equipment-select");
             const rarity = document.getElementById("rarity-select").value;
