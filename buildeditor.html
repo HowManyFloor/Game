@@ -27,6 +27,7 @@
     </div>
     <div class="stats-panel">
         <h2>Stats</h2>
+        <h3>Level: <span id="level">1</span></h3>
         <h3>Offensives</h3>
         <p>ATK: <span id="atk">50</span></p>
         <p>CRIT: <span id="crit">10%</span></p>
@@ -35,6 +36,10 @@
         <p>Résistance: <span id="res">5%</span></p>
         <h3>Utilitaires</h3>
         <p>VIT: <span id="vit">20</span></p>
+
+        <!-- Interface pour attribuer des points de stats -->
+        <h3>Points disponibles: <span id="available-points">5</span></h3>
+        <button onclick="openStatsPanel()">Attribuer des points</button>
     </div>
     <div class="panel" id="equipment-panel">
         <h3>Choisir un équipement</h3>
@@ -48,6 +53,14 @@
         </select>
         <button onclick="applySelection()">Valider</button>
     </div>
+    <div class="panel" id="stats-panel">
+        <h3>Attribuer des points de stats</h3>
+        <p>ATK: <button onclick="addStat('atk')">+</button><span id="atk-points">0</span></p>
+        <p>DEF: <button onclick="addStat('def')">+</button><span id="def-points">0</span></p>
+        <p>VIT: <button onclick="addStat('vit')">+</button><span id="vit-points">0</span></p>
+        <button onclick="applyStats()">Valider les points</button>
+    </div>
+
     <script>
         const equipment = {
             "helmet": [
@@ -67,7 +80,46 @@
                 { name: "Hache de guerre", atk: 20, def: 0 }
             ]
         };
+
         let currentSlot = "";
+        let playerLevel = 1; // Niveau initial du joueur
+        let availablePoints = 5; // Points de stats au niveau 1
+        let statsPoints = { atk: 0, def: 0, vit: 0 }; // Points de stats attribués
+
+        // Mettre à jour les stats en fonction du niveau
+        function updateStats() {
+            const levelMultiplier = 1 + (playerLevel - 1) * 0.1; // Par exemple, +10% par niveau
+            document.getElementById("atk").textContent = (50 + statsPoints.atk * 2) * levelMultiplier;
+            document.getElementById("def").textContent = (30 + statsPoints.def * 2) * levelMultiplier;
+            document.getElementById("vit").textContent = (20 + statsPoints.vit * 2) * levelMultiplier;
+            document.getElementById("level").textContent = playerLevel;
+        }
+
+        // Ouvrir la fenêtre pour attribuer des points de stats
+        function openStatsPanel() {
+            const panel = document.getElementById("stats-panel");
+            panel.style.display = "block";
+            updateStats();
+            document.getElementById("available-points").textContent = availablePoints;
+        }
+
+        // Ajouter un point à la statistique correspondante
+        function addStat(stat) {
+            if (availablePoints > 0) {
+                statsPoints[stat]++;
+                availablePoints--;
+                document.getElementById(`${stat}-points`).textContent = statsPoints[stat];
+                document.getElementById("available-points").textContent = availablePoints;
+                updateStats();
+            }
+        }
+
+        // Appliquer les points de stats
+        function applyStats() {
+            document.getElementById("stats-panel").style.display = "none";
+            updateStats();
+        }
+
         function openPanel(slot) {
             currentSlot = slot;
             const panel = document.getElementById("equipment-panel");
@@ -81,14 +133,19 @@
                 select.appendChild(option);
             });
         }
+
         function applySelection() {
             const select = document.getElementById("equipment-select");
             const rarity = document.getElementById("rarity-select").value;
             const selectedItem = equipment[currentSlot][select.value];
-            document.getElementById("def").textContent = 30 + (selectedItem.def || 0);
-            document.getElementById("atk").textContent = 50 + (selectedItem.atk || 0);
+            statsPoints.def += selectedItem.def || 0;
+            statsPoints.atk += selectedItem.atk || 0;
+            updateStats(); // Mettre à jour les statistiques après l'équipement
             document.getElementById("equipment-panel").style.display = "none";
         }
+
+        // Appeler updateStats pour afficher les stats initiales
+        updateStats();
     </script>
 </body>
 </html>
