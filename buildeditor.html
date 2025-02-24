@@ -28,6 +28,7 @@
     <div class="stats-panel">
         <h2>Stats</h2>
         <h3>Level: <span id="level">1</span></h3>
+        <h3>Class: <span id="class">Guerrier</span></h3>
         <h3>Offensives</h3>
         <p>ATK: <span id="atk">50</span></p>
         <p>CRIT: <span id="crit">10%</span></p>
@@ -40,6 +41,10 @@
         <!-- Interface pour attribuer des points de stats -->
         <h3>Points disponibles: <span id="available-points">5</span></h3>
         <button onclick="openStatsPanel()">Attribuer des points</button>
+
+        <!-- Choisir le niveau et la classe -->
+        <h3>Choisir le niveau et la classe</h3>
+        <button onclick="openClassLevelPanel()">Changer le niveau / la classe</button>
     </div>
     <div class="panel" id="equipment-panel">
         <h3>Choisir un équipement</h3>
@@ -59,6 +64,18 @@
         <p>DEF: <button onclick="addStat('def')">+</button><span id="def-points">0</span></p>
         <p>VIT: <button onclick="addStat('vit')">+</button><span id="vit-points">0</span></p>
         <button onclick="applyStats()">Valider les points</button>
+    </div>
+    <div class="panel" id="class-level-panel">
+        <h3>Changer le niveau et la classe</h3>
+        <label for="level-input">Niveau :</label>
+        <input type="number" id="level-input" value="1" min="1" max="100"><br>
+        <label for="class-select">Classe :</label>
+        <select id="class-select">
+            <option value="Guerrier">Guerrier</option>
+            <option value="Magicien">Magicien</option>
+            <option value="Voleur">Voleur</option>
+        </select><br>
+        <button onclick="applyClassLevel()">Valider</button>
     </div>
 
     <script>
@@ -82,31 +99,60 @@
         };
 
         let currentSlot = "";
-        let playerLevel = 1; // Niveau initial du joueur
-        let availablePoints = 5; // Points de stats au niveau 1
-        let statsPoints = { atk: 0, def: 0, vit: 0 }; // Points de stats attribués
+        let playerLevel = 1;
+        let availablePoints = 5;
+        let statsPoints = { atk: 0, def: 0, vit: 0 };
+        let playerClass = "Guerrier";
+        
+        // Mise à jour des statistiques de base
+        const baseStats = {
+            "Guerrier": { atk: 10, def: 15, vit: 25 },
+            "Magicien": { atk: 15, def: 5, vit: 20 },
+            "Voleur": { atk: 12, def: 10, vit: 30 }
+        };
 
-        // Mettre à jour les stats en fonction du niveau
         function updateStats() {
-            const levelMultiplier = 1 + (playerLevel - 1) * 0.1; // Par exemple, +10% par niveau
-            document.getElementById("atk").textContent = (50 + statsPoints.atk * 2) * levelMultiplier;
-            document.getElementById("def").textContent = (30 + statsPoints.def * 2) * levelMultiplier;
-            document.getElementById("vit").textContent = (20 + statsPoints.vit * 2) * levelMultiplier;
+            const levelMultiplier = 1 + (playerLevel - 1) * 0.1;
+            const base = baseStats[playerClass];
+            document.getElementById("atk").textContent = (base.atk + statsPoints.atk * 2) * levelMultiplier;
+            document.getElementById("def").textContent = (base.def + statsPoints.def * 2) * levelMultiplier;
+            document.getElementById("vit").textContent = (base.vit + statsPoints.vit * 2) * levelMultiplier;
             document.getElementById("level").textContent = playerLevel;
+            document.getElementById("class").textContent = playerClass;
         }
 
         // Ouvrir la fenêtre pour attribuer des points de stats
         function openStatsPanel() {
-            closePanels(); // Ferme tous les panneaux ouverts avant d'ouvrir un nouveau
+            closePanels();
             const panel = document.getElementById("stats-panel");
             panel.style.display = "block";
             updateStats();
             document.getElementById("available-points").textContent = availablePoints;
         }
 
+        // Ouvrir la fenêtre pour changer la classe et le niveau
+        function openClassLevelPanel() {
+            closePanels();
+            const panel = document.getElementById("class-level-panel");
+            panel.style.display = "block";
+        }
+
+        // Appliquer le changement de niveau et de classe
+        function applyClassLevel() {
+            playerLevel = parseInt(document.getElementById("level-input").value);
+            playerClass = document.getElementById("class-select").value;
+            availablePoints = 5 + (playerLevel - 1) * 2;
+            statsPoints = { atk: 0, def: 0, vit: 0 };
+            updateStats();
+            document.getElementById("class-level-panel").style.display = "none";
+        }
+
         // Ouvrir un panneau d'équipement
         function openPanel(slot) {
-            closePanels(); // Ferme tous les panneaux ouverts avant d'ouvrir un nouveau
+            closePanels();
+            if (currentSlot === slot) {
+                return; // Si le même panneau est cliqué, on le ferme
+            }
             currentSlot = slot;
             const panel = document.getElementById("equipment-panel");
             panel.style.display = "block";
@@ -124,6 +170,7 @@
         function closePanels() {
             document.getElementById("equipment-panel").style.display = "none";
             document.getElementById("stats-panel").style.display = "none";
+            document.getElementById("class-level-panel").style.display = "none";
         }
 
         // Ajouter un point à la statistique correspondante
@@ -150,11 +197,10 @@
             const selectedItem = equipment[currentSlot][select.value];
             statsPoints.def += selectedItem.def || 0;
             statsPoints.atk += selectedItem.atk || 0;
-            updateStats(); // Mettre à jour les statistiques après l'équipement
+            updateStats();
             document.getElementById("equipment-panel").style.display = "none";
         }
 
-        // Appeler updateStats pour afficher les stats initiales
         updateStats();
     </script>
 </body>
