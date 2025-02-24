@@ -3,149 +3,90 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Build Editor - RPG</title>
+    <title>Fiche de Personnage</title>
     <style>
-        body { font-family: Arial, sans-serif; text-align: center; }
-        .container { width: 600px; margin: auto; }
-        select, button { margin: 5px; padding: 5px; }
-        .stats { margin-top: 20px; padding: 10px; border: 1px solid #ccc; display: inline-block; }
+        body { font-family: Arial, sans-serif; text-align: center; display: flex; }
+        .character-sheet { width: 50%; padding: 20px; border-right: 2px solid #ccc; }
+        .stats-panel { width: 50%; padding: 20px; }
+        .equipment-slot { width: 100px; height: 100px; border: 2px solid #000; margin: 10px auto; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+        .panel { display: none; position: absolute; top: 50px; right: 20px; background: white; border: 1px solid #000; padding: 10px; }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h2>Build Editor - Personnalisation Équipement</h2>
-
-        <!-- Liste des équipements -->
-        <div id="equipment-selection">
-            <label for="helmet">Casque :</label>
-            <select id="helmet"></select>
-            <select id="helmet-rarity"></select>
-
-            <label for="shoulders">Épaules :</label>
-            <select id="shoulders"></select>
-            <select id="shoulders-rarity"></select>
-
-            <label for="chest">Torse :</label>
-            <select id="chest"></select>
-            <select id="chest-rarity"></select>
-
-            <label for="gloves">Gants :</label>
-            <select id="gloves"></select>
-            <select id="gloves-rarity"></select>
-
-            <label for="belt">Ceinture :</label>
-            <select id="belt"></select>
-            <select id="belt-rarity"></select>
-
-            <label for="pants">Pantalon :</label>
-            <select id="pants"></select>
-            <select id="pants-rarity"></select>
-
-            <label for="boots">Bottes :</label>
-            <select id="boots"></select>
-            <select id="boots-rarity"></select>
-
-            <label for="weapon">Arme principale :</label>
-            <select id="weapon"></select>
-            <select id="weapon-rarity"></select>
-
-            <label for="offhand">Arme secondaire :</label>
-            <select id="offhand"></select>
-            <select id="offhand-rarity"></select>
-        </div>
-
-        <button onclick="calculateStats()">Calculer les stats</button>
-
-        <!-- Affichage des stats -->
-        <div class="stats">
-            <h3>Stats finales :</h3>
-            <p>ATK : <span id="atk">50</span></p>
-            <p>DEF : <span id="def">30</span></p>
-            <p>VIT : <span id="vit">20</span></p>
-            <p>CRIT : <span id="crit">10%</span></p>
-            <p>Résistance : <span id="res">5%</span></p>
-        </div>
+    <div class="character-sheet">
+        <h2>Personnage</h2>
+        <div class="equipment-slot" id="helmet-slot" onclick="openPanel('helmet')">Casque</div>
+        <div class="equipment-slot" id="shoulders-slot" onclick="openPanel('shoulders')">Épaules</div>
+        <div class="equipment-slot" id="chest-slot" onclick="openPanel('chest')">Torse</div>
+        <div class="equipment-slot" id="gloves-slot" onclick="openPanel('gloves')">Gants</div>
+        <div class="equipment-slot" id="belt-slot" onclick="openPanel('belt')">Ceinture</div>
+        <div class="equipment-slot" id="pants-slot" onclick="openPanel('pants')">Pantalon</div>
+        <div class="equipment-slot" id="boots-slot" onclick="openPanel('boots')">Bottes</div>
+        <div class="equipment-slot" id="weapon-slot" onclick="openPanel('weapon')">Arme principale</div>
+        <div class="equipment-slot" id="offhand-slot" onclick="openPanel('offhand')">Arme secondaire</div>
     </div>
-
+    <div class="stats-panel">
+        <h2>Stats</h2>
+        <p>ATK: <span id="atk">50</span></p>
+        <p>DEF: <span id="def">30</span></p>
+        <p>VIT: <span id="vit">20</span></p>
+        <p>CRIT: <span id="crit">10%</span></p>
+        <p>Résistance: <span id="res">5%</span></p>
+    </div>
+    <div class="panel" id="equipment-panel">
+        <h3>Choisir un équipement</h3>
+        <select id="equipment-select"></select>
+        <select id="rarity-select">
+            <option value="gris">Gris</option>
+            <option value="vert">Vert</option>
+            <option value="bleu">Bleu</option>
+            <option value="violet">Violet</option>
+            <option value="légendaire">Légendaire</option>
+        </select>
+        <button onclick="applySelection()">Valider</button>
+    </div>
     <script>
-        // Stats de base du personnage
-        const baseStats = { atk: 50, def: 30, vit: 20, crit: 10, res: 5 };
-
-        // Définition des équipements et de leurs stats
         const equipment = {
             "helmet": [
-                { name: "Casque en cuir", atk: 0, def: 5, vit: 2, crit: 1, res: 2 },
-                { name: "Casque en fer", atk: 0, def: 10, vit: -1, crit: 2, res: 5 }
+                { name: "Casque en cuir", atk: 0, def: 5 },
+                { name: "Casque en fer", atk: 0, def: 10 }
             ],
             "shoulders": [
-                { name: "Épaulières légères", atk: 0, def: 3, vit: 1, crit: 2, res: 1 },
-                { name: "Épaulières lourdes", atk: 0, def: 8, vit: -1, crit: 1, res: 4 }
+                { name: "Épaulières légères", atk: 0, def: 3 },
+                { name: "Épaulières lourdes", atk: 0, def: 8 }
+            ],
+            "chest": [
+                { name: "Plastron de cuir", atk: 0, def: 10 },
+                { name: "Plastron d'acier", atk: 0, def: 15 }
             ],
             "weapon": [
-                { name: "Épée de base", atk: 15, def: 0, vit: 0, crit: 5, res: 0 },
-                { name: "Hache de guerre", atk: 20, def: 0, vit: -2, crit: 7, res: 0 }
+                { name: "Épée de base", atk: 15, def: 0 },
+                { name: "Hache de guerre", atk: 20, def: 0 }
             ]
         };
-
-        // Définition des couleurs et multiplicateurs de rareté
-        const rarityMultipliers = {
-            "gris": 0,
-            "vert": 1,
-            "bleu": 2,
-            "violet": 3,
-            "légendaire": 4
-        };
-
-        // Fonction pour générer les options de sélection
-        function populateSelects() {
-            Object.keys(equipment).forEach(slot => {
-                let select = document.getElementById(slot);
-                let raritySelect = document.getElementById(slot + "-rarity");
-
-                equipment[slot].forEach((item, index) => {
-                    let option = document.createElement("option");
-                    option.value = index;
-                    option.textContent = item.name;
-                    select.appendChild(option);
-                });
-
-                Object.keys(rarityMultipliers).forEach(rarity => {
-                    let option = document.createElement("option");
-                    option.value = rarity;
-                    option.textContent = rarity.charAt(0).toUpperCase() + rarity.slice(1);
-                    raritySelect.appendChild(option);
-                });
+        let currentSlot = "";
+        function openPanel(slot) {
+            currentSlot = slot;
+            const panel = document.getElementById("equipment-panel");
+            panel.style.display = "block";
+            const select = document.getElementById("equipment-select");
+            select.innerHTML = "";
+            equipment[slot].forEach((item, index) => {
+                let option = document.createElement("option");
+                option.value = index;
+                option.textContent = item.name;
+                select.appendChild(option);
             });
         }
-
-        // Calcul des stats finales
-        function calculateStats() {
-            let finalStats = { ...baseStats };
-
-            Object.keys(equipment).forEach(slot => {
-                let select = document.getElementById(slot);
-                let raritySelect = document.getElementById(slot + "-rarity");
-
-                let item = equipment[slot][select.value];
-                let rarityMultiplier = rarityMultipliers[raritySelect.value];
-
-                finalStats.atk += item.atk + (rarityMultiplier * 2);
-                finalStats.def += item.def + (rarityMultiplier * 3);
-                finalStats.vit += item.vit + (rarityMultiplier * 1);
-                finalStats.crit += item.crit + (rarityMultiplier * 2);
-                finalStats.res += item.res + (rarityMultiplier * 2);
-            });
-
-            // Affichage des nouvelles stats
-            document.getElementById("atk").textContent = finalStats.atk;
-            document.getElementById("def").textContent = finalStats.def;
-            document.getElementById("vit").textContent = finalStats.vit;
-            document.getElementById("crit").textContent = finalStats.crit + "%";
-            document.getElementById("res").textContent = finalStats.res + "%";
+        function applySelection() {
+            const select = document.getElementById("equipment-select");
+            const rarity = document.getElementById("rarity-select").value;
+            const selectedItem = equipment[currentSlot][select.value];
+            document.getElementById(`${currentSlot}-slot`).textContent = selectedItem.name;
+            document.getElementById("def").textContent = 30 + (selectedItem.def || 0);
+            document.getElementById("atk").textContent = 50 + (selectedItem.atk || 0);
+            document.getElementById("equipment-panel").style.display = "none";
         }
-
-        // Initialisation des sélections d'équipement
-        populateSelects();
     </script>
 </body>
 </html>
