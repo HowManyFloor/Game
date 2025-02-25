@@ -4,9 +4,17 @@
             font-size : 48px;
         }
         .body{
-            background-image: url("img/Ville/Azura.png");
-
+            background-image: url("img/ville/Azura.png");
         }
+        .container1 {
+            display: flex;
+            justify-content: space-between;  /* Espace entre les sections */
+            align-items: flex-start;         /* Aligne les sections en haut (au même niveau) */
+            gap: 20px;
+            padding: 20px;
+            flex-wrap: wrap;
+        }
+
         .equipment-slot {
             width: 100px;
             height: 100px;
@@ -36,7 +44,31 @@
         .stuff:hover {
             background-color: rgba(255, 0, 0, 1); /* Changer la couleur du bouton au survol */
         }
-        
+
+        .character-sheet {
+            flex: 1 1 48%;   /* Prend environ la moitié de l'écran, ajustez selon votre besoin */
+            padding: 15px;
+            border-radius: 8px;
+        }
+
+        .stat-panel {
+            flex: 1 1 48%;   /* Prend environ l'autre moitié de l'écran */
+            padding: 15px;
+            border-radius: 8px;
+        }
+
+        .panel {
+            display: none; /* Par défaut, la fenêtre est cachée */
+            position: fixed; /* Positionne l'élément par rapport à la fenêtre de visualisation */
+            top: 50%; /* Positionne le panneau à 50% de la hauteur de la fenêtre */
+            left: 50%; /* Positionne le panneau à 50% de la largeur de la fenêtre */
+            transform: translate(-50%, -50%); /* Décale le panneau pour qu'il soit parfaitement centré */
+            background: white; /* Fond blanc pour le panneau */
+            border: 1px solid #000; /* Bordure noire */
+            padding: 10px; /* Padding pour l'espacement interne */
+            z-index: 1000; /* S'assurer que la pop-up est au-dessus des autres éléments */
+        }
+
         .equipment-slot {
             width: 100px;
             height: 100px;
@@ -67,4 +99,10 @@
 
         .equipment-slot.legendaire {
             border-color: gold;
+        }
+       
+        .2body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: space-between;
         }
