@@ -7,3 +7,64 @@
             background-image: url("img/Ville/Azura.png");
 
         }
+        .equipment-slot {
+            width: 100px;
+            height: 100px;
+            border: 2px solid #000;
+            margin: 10px auto;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-size: cover;
+            position: relative; /* Important pour que le bouton soit positionné par rapport au slot */
+        }
+
+        .stuff {
+            position: absolute; /* Positionner le bouton par rapport à son parent */
+            bottom: 10px; /* Décalage du haut du slot */
+            right: -50px; /* Décalage du côté droit du slot */
+            background-color: rgba(128, 128, 128, 0.3); /* Couleur de fond rouge semi-transparent */
+            color: white;
+            border: none;
+            padding: 5px;
+            font-size: 12px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .stuff:hover {
+            background-color: rgba(255, 0, 0, 1); /* Changer la couleur du bouton au survol */
+        }
+        
+        .equipment-slot {
+            width: 100px;
+            height: 100px;
+            border: 2px solid #000; /* Bordure par défaut */
+            margin: 10px auto;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-size: cover;
+        }
+
+        .equipment-slot.gris {
+            border-color: gray;
+        }
+
+        .equipment-slot.vert {
+            border-color: green;
+        }
+
+        .equipment-slot.bleu {
+            border-color: blue;
+        }
+
+        .equipment-slot.violet {
+            border-color: purple;
+        }
+
+        .equipment-slot.legendaire {
+            border-color: gold;
+        }
