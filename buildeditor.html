@@ -4,46 +4,39 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
-    <title>Fiche de Personnage</title>
-    <style>
-        body { font-family: Arial, sans-serif; display: flex; justify-content: space-between; }
-        .character-sheet { width: 40%; padding: 20px; border-right: 2px solid #ccc; text-align: center;}
-        .stats-panel { width: 50%; padding: 20px; }
-        .equipment-slot { width: 100px; height: 100px; border: 2px solid #000; margin: 10px auto; cursor: pointer; display: flex; align-items: center; justify-content: center; background-size: cover; }
-        .panel { display: none; position: absolute; top: 50px; right: 20px; background: white; border: 1px solid #000; padding: 10px; }
-    </style>
+    <title>Buildeditor</title>
 </head>
-<body class="body">
+<body>
+<div class="container1">
     <div class="character-sheet">
         <h2>Personnage</h2>
         <div class="equipment-slot" id="helmet-slot" onclick="openPanel('helmet')" style="background-image: url('img/Slot/icon_bg_helm.png');" aria-label="Casque en cuir ou casque en fer">
-         <button class="stuff" id="reset-helmet" onclick="resetEquipment('helmet')">Reset</button></div>
+            <button class="stuff" id="reset-helmet" onclick="resetEquipment('helmet')">Reset</button></div>
         <div class="equipment-slot" id="shoulders-slot" onclick="openPanel('shoulders')" style="background-image: url('img/Slot/icon_bg_shoulder.png');" aria-label="Épaulières légères ou épaulières lourdes">
-         <button class="stuff" id="reset-shoulders" onclick="resetEquipment('shoulders')">Reset</button></div>
+            <button class="stuff" id="reset-shoulders" onclick="resetEquipment('shoulders')">Reset</button></div>
         <div class="equipment-slot" id="chest-slot" onclick="openPanel('chest')" style="background-image: url('img/Slot/icon_bg_chest.png');" aria-label="Plastron de cuir ou plastron d'acier">
-         <button class="stuff" id="reset-chest" onclick="resetEquipment('chest')">Reset</button></div>
+            <button class="stuff" id="reset-chest" onclick="resetEquipment('chest')">Reset</button></div>
         <div class="equipment-slot" id="gloves-slot" onclick="openPanel('gloves')" style="background-image: url('img/Slot/icon_bg_gloves.png');" aria-label="Gant du débutant">
-         <button class="stuff" id="reset-gloves" onclick="resetEquipment('gloves')">Reset</button></div>
+            <button class="stuff" id="reset-gloves" onclick="resetEquipment('gloves')">Reset</button></div>
         <div class="equipment-slot" id="belt-slot" onclick="openPanel('belt')" style="background-image: url('img/Slot/icon_bg_belt.png');" aria-label="Ceinture">
-         <button class="stuff" id="reset-belt" onclick="resetEquipment('belt')">Reset</button></div>
+            <button class="stuff" id="reset-belt" onclick="resetEquipment('belt')">Reset</button></div>
         <div class="equipment-slot" id="pants-slot" onclick="openPanel('pants')" style="background-image: url('img/Slot/icon_bg_pants.png');" aria-label="Pantalon">
-         <button class="stuff" id="reset-pants" onclick="resetEquipment('pants')">Reset</button></div>
+            <button class="stuff" id="reset-pants" onclick="resetEquipment('pants')">Reset</button></div>
         <div class="equipment-slot" id="boots-slot" onclick="openPanel('boots')" style="background-image: url('img/Slot/icon_bg_boots.png');" aria-label="Bottes">
-         <button class="stuff" id="reset-boots" onclick="resetEquipment('boots')">Reset</button></div>
-        <div class="equipment-slot" id="weapon-slot" onclick="openPanel('weapon')" style="background-image: url('img/Slot/icon_bg_weapon.png');" aria-label="Épée de base ou hache de guerre">
-         <button class="stuff" id="reset-weapon" onclick="resetEquipment('weapon')">Reset</button></div>
-        <div class="equipment-slot" id="offhand-slot" onclick="openPanel('offhand')" style="background-image: url('img/Slot/icon_bg_shield.png');" aria-label="Bouclier">
-         <button class="stuff" id="reset-offhand" onclick="resetEquipment('offhand')">Reset</button></div>
+            <button class="stuff" id="reset-boots" onclick="resetEquipment('boots')">Reset</button></div>
+        <div class="equipment-slot" id="weapon-slot" onclick="openPanel('weapon')" style="background-image: url('img/Slot/icon_bg_weapon.png');" aria-label="Main droite">
+            <button class="stuff" id="reset-weapon" onclick="resetEquipment('weapon')">Reset</button></div>
+        <div class="equipment-slot" id="offhand-slot" onclick="openPanel('offhand')" style="background-image: url('img/Slot/icon_bg_shield.png');" aria-label="Main gauche">
+            <button class="stuff" id="reset-offhand" onclick="resetEquipment('offhand')">Reset</button></div>
         <div class="equipment-slot" id="ringleft-slot" onclick="openPanel('ringleft')" style="background-image: url('img/Slot/icon_bg_ring.png');" aria-label="Bague gauche">
-         <button class="stuff" id="reset-ringleft" onclick="resetEquipment('ringleft')">Reset</button></div>
+            <button class="stuff" id="reset-ringleft" onclick="resetEquipment('ringleft')">Reset</button></div>
         <div class="equipment-slot" id="ringright-slot" onclick="openPanel('ringright')" style="background-image: url('img/Slot/icon_bg_ring.png');" aria-label="Bague droite">
-         <button class="stuff" id="reset-ringright" onclick="resetEquipment('ringright')">Reset</button></div>
+            <button class="stuff" id="reset-ringright" onclick="resetEquipment('ringright')">Reset</button></div>
         <div class="equipment-slot" id="neck-slot" onclick="openPanel('neck')" style="background-image: url('img/Slot/icon_bg_neck.png');" aria-label="Collier">
-         <button class="stuff" id="reset-neck" onclick="resetEquipment('neck')">Reset</button></div>
+            <button class="stuff" id="reset-neck" onclick="resetEquipment('neck')">Reset</button></div>
         <div class="equipment-slot" id="artefact-slot" onclick="openPanel('art')" style="background-image: url('img/Slot/icon_bg_neck.png');" aria-label="Artefact">
-         <button class="stuff" id="reset-artefact" onclick="resetEquipment('artefact')">Reset</button></div>
+            <button class="stuff" id="reset-artefact" onclick="resetEquipment('artefact')">Reset</button></div>
     </div>
-   </div>
     <div class="stats-panel">
         <h2>Stats</h2>
         <h3>Level: <span id="level">1</span></h3>
@@ -61,14 +54,15 @@
         <h3>Choisir le niveau et la classe</h3>
         <button onclick="openClassLevelPanel()">Changer le niveau / la classe</button>
     </div>
+</div>
     <div class="panel" id="equipment-panel">
         <h3>Choisir un équipement</h3>
         <select id="equipment-select"></select>
         <select id="rarity-select" onchange="updateStatChoices()">
-            <option value="gris">Gris</option>
-            <option value="vert">Vert</option>
-            <option value="bleu">Bleu</option>
-            <option value="violet">Violet</option>
+            <option value="gris">Commun</option>
+            <option value="vert">Peu commun</option>
+            <option value="bleu">Rare</option>
+            <option value="violet">Epic</option>
             <option value="legendaire">Légendaire</option>
         </select>
         <div id="additional-stats"></div>
@@ -95,258 +89,6 @@
         </select><br>
         <button onclick="applyClassLevel()">Valider</button>
     </div>
-
-    <script>
-        const equipmentByClass = {
-            "Guerrier": {
-                "helmet": [
-                    { name: "Casque en cuir", atk: 0, def: 5 },
-                    { name: "Casque en fer", atk: 0, def: 10 }
-                ],
-                "weapon": [
-                    { name: "Épée de base", atk: 15, def: 0 },
-                    { name: "Hache de guerre", atk: 20, def: 0 }
-                ],
-                "shoulders": [
-                    { name: "Épaulières légères", atk: 0, def: 3 },
-                    { name: "Épaulières lourdes", atk: 0, def: 8 }
-                ]
-            }
-        };
-
-        let currentSlot = "";
-        let selectedRarity = ""; 
-        let itemSelected = null;
-        let playerLevel = 1;
-        let availablePoints = 5;
-        let statsPoints = { atk: 0, def: 0, vit: 0 };
-        let playerClass = "Guerrier";
-
-        const baseStats = {
-            "Guerrier": { atk: 10, def: 15, vit: 25 },
-            "Magicien": { atk: 15, def: 5, vit: 20 },
-            "Voleur": { atk: 12, def: 10, vit: 30 },
-            "Clerc": { atk: 12, def: 10, vit: 30 },
-            "Necro": { atk: 12, def: 10, vit: 30 }
-        };
-        const rarityLimits = {
-            "gris": { atk: [0, 5], def: [0, 2], vit: [0, 1] },
-            "vert": { atk: [5, 10], def: [2, 5], vit: [1, 2] },
-            "bleu": { atk: [10, 15], def: [5, 10], vit: [2, 4] },
-            "violet": { atk: [15, 20], def: [10, 15], vit: [4, 6] },
-            "legendaire": { atk: [20, 30], def: [15, 20], vit: [6, 8] }
-        };
-        function updateStats() {
-            const levelMultiplier = 1 + (playerLevel - 1) * 0.1;
-            const base = baseStats[playerClass];
-            document.getElementById("atk").textContent = (base.atk + statsPoints.atk * 2) * levelMultiplier;
-            document.getElementById("def").textContent = (base.def + statsPoints.def * 2) * levelMultiplier;
-            document.getElementById("vit").textContent = (base.vit + statsPoints.vit * 2) * levelMultiplier;
-            document.getElementById("level").textContent = playerLevel;
-            document.getElementById("class").textContent = playerClass;
-        }
-
-        function addStat(stat) {
-            if (availablePoints > 0) {
-                statsPoints[stat]++;
-                availablePoints--;
-                document.getElementById(stat + "-points").textContent = statsPoints[stat];
-                document.getElementById("available-points").textContent = availablePoints;
-                updateStats();
-            }
-        }
-
-        function applyStats() {
-            document.getElementById("stats-panel").style.display = "none";
-            updateStats();
-        }
-
-        function openPanel(slot) {
-            closePanels();
-            if (currentSlot === slot) return;
-            currentSlot = slot;
-
-            updateBorderColor();
-
-            const classEquipment = equipmentByClass[playerClass][slot];
-            const panel = document.getElementById("equipment-panel");
-            panel.style.display = "block";
-
-            const select = document.getElementById("equipment-select");
-            select.innerHTML = "";
-            classEquipment.forEach((item, index) => {
-                let option = document.createElement("option");
-                option.value = index;
-                option.textContent = item.name;
-                select.appendChild(option);
-            });
-        }
-
-        function closePanels() {
-            document.getElementById("equipment-panel").style.display = "none";
-            document.getElementById("stats-panel").style.display = "none";
-            document.getElementById("class-level-panel").style.display = "none";
-        }
-        // Fonction pour appliquer la bordure en fonction de l'item sélectionné
-        function applyItemBorder(item) {
-            const slotElement = document.getElementById(`${currentSlot}-slot`); // Sélectionne le slot actuel
-
-            // Applique la classe de rareté de l'item pour la bordure
-            if (item && slotElement) {
-                slotElement.classList.remove("gris", "vert", "bleu", "violet", "legendaire"); // Retirer les anciennes classes de rareté
-                slotElement.classList.add(item.rarity); // Ajoute la nouvelle classe de rareté en fonction de l'item
-            }
-        }
-        // Fonction pour valider la sélection de l'équipement dans le slot
-        function applySelection() {
-            const select = document.getElementById("equipment-select");
-            const selectedItem = equipmentByClass[playerClass][currentSlot][select.value];
-
-            // Vérifier si un item a été sélectionné
-            if (selectedItem) {
-                // Appliquer les stats de l'équipement
-                statsPoints.def += selectedItem.def || 0;
-                statsPoints.atk += selectedItem.atk || 0;
-
-                // Récupérer les valeurs des stats personnalisées de l'utilisateur
-                const rarity = document.getElementById("rarity-select").value;
-                const stats = rarityLimits[rarity];
-
-                // Mettre à jour les stats avec les valeurs saisies par l'utilisateur
-                Object.keys(stats).forEach(stat => {
-                    const input = document.getElementById(`${stat}-input`);
-                    const inputValue = parseInt(input.value);
-                    if (inputValue >= stats[stat][0] && inputValue <= stats[stat][1]) {
-                        statsPoints[stat] += inputValue;
-                    }
-                });
-
-                // Mettre à jour les stats de l'interface
-                updateStats();
-
-                // Appliquer la bordure persistante en fonction de l'item
-                applyItemBorder(selectedItem);
-
-                // Enregistrer l'item sélectionné
-                itemSelected = selectedItem;
-            }
-
-            // Ferme le panneau après application
-            closePanels();
-        }
-        function resetEquipment(slot) {
-            // Retirer l'équipement sélectionné sans enlever l'arrière-plan
-            const select = document.getElementById("equipment-select");
-            const selectedItem = equipmentByClass[playerClass][slot][select.value];
-
-            // Réduire les stats de l'équipement
-            statsPoints.def -= selectedItem.def || 0;
-            statsPoints.atk -= selectedItem.atk || 0;
-
-            // Réinitialiser les stats et mettre à jour l'interface
-            updateStats();
-
-            // Cacher le bouton reset une fois l'équipement retiré
-            document.getElementById(`reset-${slot}`).style.display = "none";
-        }
-
-        function openStatsPanel() {
-            closePanels();
-            document.getElementById("stats-panel").style.display = "block";
-            updateStats();
-            document.getElementById("available-points").textContent = availablePoints;
-        }
-        function updateStatChoices() {
-            const rarity = document.getElementById("rarity-select").value;
-            const additionalStats = document.getElementById("additional-stats");
-            additionalStats.innerHTML = ""; // Vider les options existantes
-            const stats = rarityLimits[rarity];
-    
-            // Afficher des champs de saisie pour chaque statistique
-            Object.keys(stats).forEach(stat => {
-                let statDiv = document.createElement("div");
-                statDiv.innerHTML = `<label for="${stat}">${stat.toUpperCase()}</label>
-                                    <input type="number" id="${stat}-input" min="${stats[stat][0]}" max="${stats[stat][1]}" 
-                                    value="${stats[stat][0]}" />`;
-                additionalStats.appendChild(statDiv);
-            });
-        }
-        function applyStatValue() {
-            const inputValue = parseInt(document.getElementById("stat-input").value);
-            const rarity = document.getElementById("rarity-select").value;
-            const statLimits = rarityLimits[rarity][currentStat];
-
-            if (inputValue >= statLimits[0] && inputValue <= statLimits[1]) {
-                statsPoints[currentStat] += inputValue;
-                availablePoints--;
-                updateStats();
-                document.getElementById("stat-value").style.display = "none";
-            } else {
-                alert("La valeur est en dehors des limites pour cette rareté.");
-            }
-        }
-        function openClassLevelPanel() {
-            closePanels();
-            document.getElementById("class-level-panel").style.display = "block";
-        }
-        // Fonction pour afficher la bordure de l'élément actuel au changement de rareté
-        function updateBorderColor() {
-            const rarity = document.getElementById("rarity-select").value; // Récupère la rareté sélectionnée
-            const slotElement = document.getElementById(`${currentSlot}-slot`); // Sélectionne l'élément du slot d'équipement actuel
-
-            // Sauvegarder la rareté pour la persistance
-            selectedRarity = rarity;
-
-            // Si un item a été sélectionné, la bordure doit rester en fonction de l'item
-            if (itemSelected) {
-                applyItemBorder(itemSelected);
-            }
-        }
-
-        // Appel de la fonction de mise à jour de la bordure à chaque changement de rareté
-        document.getElementById("rarity-select").addEventListener("change", updateBorderColor);
-
-        // Initialisation de la bordure au chargement de la page (si un item est déjà sélectionné)
-        window.addEventListener("load", function() {
-            if (itemSelected) {
-                applyItemBorder(itemSelected);
-            }
-        });
-
-        // Fonction pour appliquer la bordure persistante après validation de la sélection
-        function validateSelection() {
-            const rarity = document.getElementById("rarity-select").value; // Récupère la rareté sélectionnée
-            const slotElement = document.getElementById(`${currentSlot}-slot`); // Sélectionne l'élément du slot d'équipement actuel
-
-            // Applique la bordure persistante en fonction de la rareté
-            if (slotElement) {
-                // Retirer les anciennes classes de rareté
-                slotElement.classList.remove("gris", "vert", "bleu", "violet", "legendaire"); 
-
-                // Ajouter la nouvelle classe de rareté en fonction de la sélection
-                slotElement.classList.add(rarity); 
-            }
-
-            // Ferme le panneau d'équipement après validation
-            closePanels();
-        }
-
-        // Ajoute un événement pour mettre à jour la bordure lorsque la rareté change
-        document.getElementById("rarity-select").addEventListener("change", updateBorderColor);
-
-        // Ajoute un événement pour valider la sélection de l'équipement
-        document.getElementById("validate-btn").addEventListener("click", validateSelection);
-        function applyClassLevel() {
-            playerLevel = parseInt(document.getElementById("level-input").value);
-            playerClass = document.getElementById("class-select").value;
-            availablePoints = 5 + (playerLevel - 1) * 2;
-            statsPoints = { atk: 0, def: 0, vit: 0 };
-            updateStats();
-            document.getElementById("class-level-panel").style.display = "none";
-        }
-        
-        updateBorderColor();
-        updateStats();
-    </script>
+    <script src="buildeditor.js"></script>
 </body>
 </html>
